@@ -27,8 +27,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void changePassword(String username, String newPassword) {
+    public boolean changePassword(String username, String newPassword) {
         //TODO
+        return false;
     }
 
 }

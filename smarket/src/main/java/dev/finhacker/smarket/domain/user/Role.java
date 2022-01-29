@@ -7,8 +7,8 @@ public class Role implements Serializable {
     Integer id;
     String name;
 
-    public static Role MANAGER = new Role(0, "MANAGER");
-    public static Role ENTERPRISE = new Role(1, "ENTERPRISE");
+    public static Role MANAGER = new Role(0, "ROLE_MANAGER");
+    public static Role ENTERPRISE = new Role(1, "ROLE_ENTERPRISE");
 
     private Role(Integer id, String name) {
         this.id = id;

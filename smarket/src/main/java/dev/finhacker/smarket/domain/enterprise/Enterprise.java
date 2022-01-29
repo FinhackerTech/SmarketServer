@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/*
-The entity of enterprises.
+/**
+ * The entity of enterprises.
  */
 @Entity
 @Data
@@ -15,6 +15,6 @@ The entity of enterprises.
 public class Enterprise {
 
     @Id
-    private Long id;
+    private Integer id;
 
 }

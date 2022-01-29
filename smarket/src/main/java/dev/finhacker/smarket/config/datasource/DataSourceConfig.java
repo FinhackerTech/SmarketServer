@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 
-/*
-Configure multiple data source.
+/**
+ * Configure multiple data source.
  */
 @Configuration
 public class DataSourceConfig {
 
-    /*
-    Data source for enterprises.
+    /**
+     * Data source for enterprises.
      */
     @Primary
     @Bean
@@ -24,8 +24,8 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
-    /*
-    Data source for users.
+    /**
+     * Data source for users.
      */
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.user")
