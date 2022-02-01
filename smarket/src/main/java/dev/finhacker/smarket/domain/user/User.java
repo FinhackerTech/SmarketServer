@@ -1,5 +1,6 @@
 package dev.finhacker.smarket.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ public abstract class User implements UserDetails {
     private Integer id;
 
     private String name;
+    @JsonIgnore
     private String password;
     private Role role;
     private String avatarUrl;

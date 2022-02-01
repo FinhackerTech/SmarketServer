@@ -1,5 +1,7 @@
 package dev.finhacker.smarket.service.impl;
 
+import dev.finhacker.smarket.domain.enterprise.Enterprise;
+import dev.finhacker.smarket.domain.user.UserManager;
 import dev.finhacker.smarket.domain.user.UserManagerRepository;
 import dev.finhacker.smarket.service.UserManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,15 +16,14 @@ public class UserManagerServiceImpl implements UserManagerService {
     private UserManagerRepository userManagerRepository;
 
     @Override
-    public boolean addFavourite(String managerName, Integer enterpriseId) {
+    public boolean addFavourite(UserManager manager, Enterprise enterprise) {
         //TODO
         return false;
     }
 
     @Override
-    public boolean removeFavourite(String managerName, Integer enterpriseId) {
+    public boolean removeFavourite(UserManager manager, Enterprise enterprise) {
         //TODO
         return false;
     }
-
 }

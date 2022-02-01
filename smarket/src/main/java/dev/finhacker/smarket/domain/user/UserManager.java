@@ -13,8 +13,8 @@ public class UserManager extends User {
 
     private HashSet<Integer> favouriteSet = new HashSet<>();
 
-    public UserManager(String name, String password, Role role) {
-        super(name, password, role);
+    public UserManager(String name, String password) {
+        super(name, password, Role.MANAGER);
     }
 
     public boolean addFavourite(Integer id) {

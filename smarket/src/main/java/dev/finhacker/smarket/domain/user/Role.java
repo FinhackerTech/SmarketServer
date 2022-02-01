@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Role implements Serializable {
 
-    Integer id;
-    String name;
+    private Integer id;
+    private String name;
 
     public static Role MANAGER = new Role(0, "ROLE_MANAGER");
     public static Role ENTERPRISE = new Role(1, "ROLE_ENTERPRISE");
@@ -17,13 +17,6 @@ public class Role implements Serializable {
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "name='" + name + '\'' +
-                '}';
     }
 
 }

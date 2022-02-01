@@ -1,6 +1,8 @@
 package dev.finhacker.smarket.service.impl;
 
+import dev.finhacker.smarket.domain.user.Role;
 import dev.finhacker.smarket.domain.user.User;
+import dev.finhacker.smarket.domain.user.UserManager;
 import dev.finhacker.smarket.domain.user.UserRepository;
 import dev.finhacker.smarket.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +29,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean changePassword(String username, String newPassword) {
+    public User getUserByName(String name) {
+        return userRepository.findByName(name);
+    }
+
+    @Override
+    public boolean changePassword(User user, String newPassword) {
         //TODO
         return false;
+    }
+
+    @Override
+    public User register(String username, String password, String role) {
+        User user = null;
+        switch (role) {
+            case "MANAGER": user = new UserManager(username, password);
+        }
+        userRepository.save(user);
+        return user;
     }
 
 }
