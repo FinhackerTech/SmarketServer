@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class RiskLevel {
 
+    private Float riskLevel;
     //营运杠杆
     private Float OL;
     //综合杠杆

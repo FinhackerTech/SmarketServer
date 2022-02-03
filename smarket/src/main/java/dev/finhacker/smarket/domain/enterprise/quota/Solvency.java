@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class Solvency {
 
+    private Float solvency;
     //资产负债率
     private Float ALR;
     //现金流利息保障倍数

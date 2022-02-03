@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class DevelopmentCapacity {
 
+    private Float developmentCapacity;
     //资本积累率
     private Float CAR;
     //营业总收入增长率

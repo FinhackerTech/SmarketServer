@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class LoanRate {
 
+    private Float loanRate;
     //短期借款占总资产比例（%）
     private Float STB2TA;
     //长期借款占资产比例（%）

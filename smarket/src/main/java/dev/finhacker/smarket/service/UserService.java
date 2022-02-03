@@ -1,6 +1,5 @@
 package dev.finhacker.smarket.service;
 
-import dev.finhacker.smarket.domain.user.Role;
 import dev.finhacker.smarket.domain.user.User;
 
 public interface UserService {
@@ -21,12 +20,12 @@ public interface UserService {
     boolean changePassword(User user, String newPassword);
 
     /**
-     * Register a new user.
+     * Register a new manager user.
      * @param username The username of the user.
      * @param password The password of the user.
-     * @param role The role of the user.
+     * @param managerName The name of the manager.
      * @return The new user if register successfully, null if failed.
      */
-    User register(String username, String password, String role);
+    User registerManager(String username, String password, String managerName);
 
 }

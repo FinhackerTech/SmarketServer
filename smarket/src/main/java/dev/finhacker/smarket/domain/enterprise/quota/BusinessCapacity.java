@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class BusinessCapacity {
 
+    private Float bussinessCapacity;
     //存货周转率
     private Float IT;
     //资本密集度

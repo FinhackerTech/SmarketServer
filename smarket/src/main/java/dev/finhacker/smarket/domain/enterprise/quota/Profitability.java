@@ -13,6 +13,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class Profitability {
 
+    private Float profitability;
     //非经常性损益/总利润
     private Float NRP;
     //流动资产净利润率

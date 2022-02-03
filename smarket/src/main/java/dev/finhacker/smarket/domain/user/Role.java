@@ -1,22 +1,26 @@
 package dev.finhacker.smarket.domain.user;
 
-import java.io.Serializable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Role implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+@Data
+@NoArgsConstructor
+public class Role {
+
+    @Id
     private Integer id;
     private String name;
 
     public static Role MANAGER = new Role(0, "ROLE_MANAGER");
     public static Role ENTERPRISE = new Role(1, "ROLE_ENTERPRISE");
 
-    private Role(Integer id, String name) {
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
 }

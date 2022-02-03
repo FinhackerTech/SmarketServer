@@ -24,6 +24,7 @@ public abstract class User implements UserDetails {
     private String name;
     @JsonIgnore
     private String password;
+    @ManyToOne
     private Role role;
     private String avatarUrl;
 
@@ -40,26 +41,31 @@ public abstract class User implements UserDetails {
         return authorities;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return name;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

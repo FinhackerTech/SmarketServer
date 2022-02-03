@@ -1,6 +1,5 @@
 package dev.finhacker.smarket.controller;
 
-import dev.finhacker.smarket.domain.user.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,40 +18,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LoginControllerTest {
+public class EnterpriseControllerTest {
 
     private MockMvc mvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        userRepository.deleteAll();
     }
 
     @After
-    public void tearDown() {
-        userRepository.deleteAll();
+    public void tearDown() throws Exception {
     }
 
     @Test
-    public void register() throws Exception {
+    public void testSearch() throws Exception {
         //TODO
-        mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .content("username=abc&password=123&managerName=abc")
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/search")
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
-        mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content("username=cdf&password=123&managerName=sda")
-                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
