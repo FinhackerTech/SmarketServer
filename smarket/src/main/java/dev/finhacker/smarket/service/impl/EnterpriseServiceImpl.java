@@ -5,8 +5,11 @@ import dev.finhacker.smarket.domain.enterprise.EnterpriseRepository;
 import dev.finhacker.smarket.service.EnterpriseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -24,6 +27,17 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Enterprise> getAllEnterprises() {
+       List<Enterprise> enterpriseList = enterpriseRepository.findAll();
+       return enterpriseList;
+    }
+
+    @Override
+    public Page<Enterprise> findAllEnterprise(Pageable pageable) {
+        return enterpriseRepository.findAll(pageable);
     }
 
 

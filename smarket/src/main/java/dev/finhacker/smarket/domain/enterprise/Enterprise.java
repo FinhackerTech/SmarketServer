@@ -5,6 +5,7 @@ import dev.finhacker.smarket.domain.enterprise.quota.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -62,6 +63,7 @@ public class Enterprise {
         return new Brief(listedColId, securityId, symbol, shortName, endDate, industryName, officeAddress, secretary, secretaryTel, secretaryFax, secretaryEmail,
                 ISIN, fullName, legalRepresentative, establishDate, registerCapital, website, email, province, city, mainBusiness, Vrisk);
     }
+
 
     @Data
     @AllArgsConstructor

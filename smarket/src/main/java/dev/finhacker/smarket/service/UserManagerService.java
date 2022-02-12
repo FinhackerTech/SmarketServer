@@ -2,6 +2,8 @@ package dev.finhacker.smarket.service;
 
 import dev.finhacker.smarket.domain.user.UserManager;
 
+import java.util.List;
+
 public interface UserManagerService {
 
     /**
@@ -11,6 +13,8 @@ public interface UserManagerService {
      * @return The success of adding.
      */
     boolean addFavourite(UserManager manager, Integer enterprise);
+    boolean addFavourite(UserManager manager, List<Integer> enterprises);
+
 
     /**
      * Remove the enterprise from the manager's favourite.
@@ -19,5 +23,7 @@ public interface UserManagerService {
      * @return The success of removing.
      */
     boolean removeFavourite(UserManager manager, Integer enterprise);
+    boolean removeFavourite(UserManager manager, List<Integer> enterprises);
+
 
 }

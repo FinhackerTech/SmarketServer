@@ -3,13 +3,14 @@ package dev.finhacker.smarket.domain.user;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashSet;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class UserManager extends User {
+
 
     private HashSet<Integer> favouriteSet = new HashSet<>();
 

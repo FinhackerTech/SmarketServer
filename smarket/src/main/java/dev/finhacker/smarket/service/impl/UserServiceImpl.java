@@ -36,8 +36,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean changePassword(User user, String newPassword) {
+    public boolean changePassword(String newPassword, String username) {
         //TODO
+        return false;
+    }
+
+    @Override
+    public boolean authPassword(String password, String username) {
         return false;
     }
 
@@ -46,6 +51,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         ensureRoleManager();
         User user = new UserManager(username, password, managerName);
         return userRepository.save(user);
+    }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public Boolean loginManager(String username, String password) {
+        //TODO
+        return null;
     }
 
     private void ensureRoleManager() {

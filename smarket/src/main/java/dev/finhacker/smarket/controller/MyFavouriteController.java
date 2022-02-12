@@ -1,6 +1,7 @@
 package dev.finhacker.smarket.controller;
 
 import dev.finhacker.smarket.domain.enterprise.Enterprise;
+import dev.finhacker.smarket.domain.user.UserManager;
 import dev.finhacker.smarket.service.UserManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,16 +21,11 @@ public class MyFavouriteController {
     private UserManagerService userManagerService;
 
     /**
-     * Set the current user manager's favourites to the enterprise list.
-     * Content type: json
-     * @param enterpriseList The list of ids of enterprises.
-     * @return True if setting successfully, false if failed.
+     * Mock method, 需要由session维护用户的登录状态，才能知道当前的manager,请在实现session后将本方法替代
+     * @return
      */
-    @PostMapping("/api/set")
-    @ResponseBody
-    public Boolean setFavourite(@RequestBody List<Integer> enterpriseList) {
-        //TODO
-        return false;
+    private UserManager getMockManager(){
+        return new UserManager();
     }
 
     /**
@@ -41,8 +37,8 @@ public class MyFavouriteController {
     @PostMapping("/api/add")
     @ResponseBody
     public Boolean addFavourite(@RequestBody List<Integer> enterpriseList) {
-        //TODO
-        return false;
+
+        return userManagerService.addFavourite(getMockManager(),enterpriseList);
     }
 
     /**
