@@ -2,7 +2,9 @@ package dev.finhacker.smarket.service.impl;
 
 import dev.finhacker.smarket.domain.enterprise.Enterprise;
 import dev.finhacker.smarket.domain.enterprise.EnterpriseRepository;
+import dev.finhacker.smarket.domain.enterprise.news.News;
 import dev.finhacker.smarket.service.EnterpriseService;
+import dev.finhacker.smarket.util.msg.MsgCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
+    public List<News> getAllNews(Enterprise enterprise) {
+        return null;
+    }
+
+    @Override
     public List<Enterprise> getAllEnterprises() {
        List<Enterprise> enterpriseList = enterpriseRepository.findAll();
        return enterpriseList;
@@ -39,7 +46,5 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     public Page<Enterprise> findAllEnterprise(Pageable pageable) {
         return enterpriseRepository.findAll(pageable);
     }
-
-
 
 }

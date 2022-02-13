@@ -2,11 +2,16 @@ package dev.finhacker.smarket.service.impl;
 
 import dev.finhacker.smarket.domain.user.*;
 import dev.finhacker.smarket.service.UserService;
+import dev.finhacker.smarket.util.msg.MsgCode;
+import dev.finhacker.smarket.util.msg.MsgCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +26,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
+    private PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByName(username);
@@ -31,38 +40,38 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            return (User) principal;
+        }
+        return null;
+    }
+
+    @Override
     public User getUserByName(String name) {
         return userRepository.findByName(name);
     }
 
     @Override
-    public boolean changePassword(String newPassword, String username) {
-        //TODO
-        return false;
+    public Boolean changePassword(User user, String newPassword) {
+        user.setPassword(getPasswordEncoder().encode(newPassword));
+        return userRepository.save(user) != null;
     }
 
     @Override
-    public boolean authPassword(String password, String username) {
-        return false;
+    public Boolean authPassword(User user, String password) {
+        return getPasswordEncoder().matches(password, user.getPassword());
     }
 
     @Override
-    public User registerManager(String username, String password, String managerName) {
+    public User registerManager(String username, String password, String managerName) throws MsgCodeException {
         ensureRoleManager();
-        User user = new UserManager(username, password, managerName);
+        if (userRepository.findByName(username) != null) {
+            throw new MsgCodeException(MsgCode.USER_HAS_EXISTED);
+        }
+        User user = new UserManager(username, getPasswordEncoder().encode(password), managerName);
         return userRepository.save(user);
-    }
-
-    /**
-     *
-     * @param username
-     * @param password
-     * @return
-     */
-    @Override
-    public Boolean loginManager(String username, String password) {
-        //TODO
-        return null;
     }
 
     private void ensureRoleManager() {

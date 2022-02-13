@@ -5,12 +5,10 @@ import dev.finhacker.smarket.domain.enterprise.quota.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -43,10 +41,13 @@ public class Enterprise {
     private String province;
     private String city;
     private String mainBusiness;
-    private Integer Vrisk;
+    private Integer enterpriseVrisk;
+    private Integer industryVrisk;
+    private String logoUrl;
+    private String description;
 
     @Embedded
-    private LoanRate loan;
+    private LoanRate loanRate;
     @Embedded
     private Solvency solvency;
     @Embedded
@@ -60,36 +61,65 @@ public class Enterprise {
 
     @JsonIgnore
     public Brief getBrief() {
-        return new Brief(listedColId, securityId, symbol, shortName, endDate, industryName, officeAddress, secretary, secretaryTel, secretaryFax, secretaryEmail,
-                ISIN, fullName, legalRepresentative, establishDate, registerCapital, website, email, province, city, mainBusiness, Vrisk);
+        return new Brief(logoUrl, fullName, registerCapital);
     }
-
 
     @Data
     @AllArgsConstructor
     public class Brief {
+        private String logoUrl;
+        private String fullName;
+        private Integer registerCapital;
+    }
+
+    @JsonIgnore
+    public Basic getBasic() {
+        return new Basic(logoUrl, fullName, enterpriseVrisk, industryVrisk);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class Basic {
+        private String logoUrl;
+        private String fullName;
+        private Integer enterpriseVrisk;
+        private Integer industryVrisk;
+    }
+
+    @JsonIgnore
+    public About getAbout() {
+        return new About(logoUrl, listedColId, securityId, symbol, industryName, website, shortName, fullName, registerCapital, description);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class About {
+        private String logoUrl;
         private Integer listedColId;
         private Integer securityId;
         private String symbol;
-        private String shortName;
-        private Date endDate;
         private String industryName;
-        private String officeAddress;
-        private String secretary;
-        private String secretaryTel;
-        private String secretaryFax;
-        private String secretaryEmail;
-        private String ISIN;
-        private String fullName;
-        private String legalRepresentative;
-        private String establishDate;
-        private Integer registerCapital;
         private String website;
-        private String email;
-        private String province;
-        private String city;
-        private String mainBusiness;
-        private Integer Vrisk;
+        private String shortName;
+        private String fullName;
+        private Integer registerCapital;
+        private String description;
+    }
+
+    @JsonIgnore
+    public Analyse getAnalyse() {
+        return new Analyse(businessCapacity, developmentCapacity, loanRate, profitability, riskLevel, solvency);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class Analyse {
+        private BusinessCapacity businessCapacity;
+        private DevelopmentCapacity developmentCapacity;
+        private LoanRate loanRate;
+        private Profitability profitability;
+        private RiskLevel riskLevel;
+        private Solvency solvency;
     }
 
 }
