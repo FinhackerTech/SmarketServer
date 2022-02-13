@@ -14,17 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     private PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -66,21 +61,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User registerManager(String username, String password, String managerName) throws MsgCodeException {
-        ensureRoleManager();
         if (userRepository.findByName(username) != null) {
             throw new MsgCodeException(MsgCode.USER_HAS_EXISTED);
         }
         User user = new UserManager(username, getPasswordEncoder().encode(password), managerName);
         return userRepository.save(user);
-    }
-
-    private void ensureRoleManager() {
-        Optional<Role> r = roleRepository.findById(Role.MANAGER.getId());
-        if (r.isPresent()) {
-            Role.MANAGER = r.get();
-        } else {
-            Role.MANAGER = roleRepository.save(Role.MANAGER);
-        }
     }
 
 }

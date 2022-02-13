@@ -1,26 +1,20 @@
 package dev.finhacker.smarket.domain.user;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public enum Role {
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+    MANAGER(0, "ROLE_MANAGER"),
+    ENTERPRISE(1, "ROLE_ENTERPRISE");
 
-@Entity
-@Data
-@NoArgsConstructor
-public class Role {
-
-    @Id
     private Integer id;
     private String name;
 
-    public static Role MANAGER = new Role(0, "ROLE_MANAGER");
-    public static Role ENTERPRISE = new Role(1, "ROLE_ENTERPRISE");
-
-    public Role(Integer id, String name) {
+    Role(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

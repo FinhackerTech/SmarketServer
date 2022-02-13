@@ -18,13 +18,12 @@ import java.util.Collection;
 public abstract class User implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
     @JsonIgnore
     private String password;
-    @ManyToOne
     private Role role;
     private String avatarUrl;
 
