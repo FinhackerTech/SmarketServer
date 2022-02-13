@@ -2,7 +2,6 @@ package dev.finhacker.smarket.service;
 
 import dev.finhacker.smarket.domain.enterprise.Enterprise;
 import dev.finhacker.smarket.domain.enterprise.news.News;
-import dev.finhacker.smarket.util.msg.MsgCodeException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

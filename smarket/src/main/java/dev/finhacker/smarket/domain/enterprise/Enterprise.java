@@ -20,7 +20,7 @@ import java.util.Date;
 public class Enterprise {
 
     @Id
-    private Integer listedColId;
+    private Integer listedCoId;
     private Integer securityId;
     private String symbol;
     private String shortName;
@@ -88,14 +88,14 @@ public class Enterprise {
 
     @JsonIgnore
     public About getAbout() {
-        return new About(logoUrl, listedColId, securityId, symbol, industryName, website, shortName, fullName, registerCapital, description);
+        return new About(logoUrl, listedCoId, securityId, symbol, industryName, website, shortName, fullName, registerCapital, description);
     }
 
     @Data
     @AllArgsConstructor
     public class About {
         private String logoUrl;
-        private Integer listedColId;
+        private Integer listedCoId;
         private Integer securityId;
         private String symbol;
         private String industryName;
