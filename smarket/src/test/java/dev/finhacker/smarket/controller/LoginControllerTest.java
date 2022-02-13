@@ -44,15 +44,15 @@ public class LoginControllerTest {
     public void register() throws Exception {
         //TODO
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .content("username=abc&password=123&managerName=abc")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"abc\",\"password\":\"123\",\"managerName\":\"abc\"}")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content("username=cdf&password=123&managerName=sda")
-                        .accept(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"abc\",\"password\":\"123\",\"managerName\":\"cdf\"}")
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
