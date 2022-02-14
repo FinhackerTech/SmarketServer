@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * Controller for "/login".
  */
@@ -22,18 +20,15 @@ public class LoginController {
     /**
      * Register a manager user with the username, password, and role.
      * Content type: x-www-form-urlencoded
-     * username The name of the user.
-     * password The password of the user.
-     * managerName The name of the manager.
+     * @param username The name of the user.
+     * @param password The password of the user.
+     * @param managerName The name of the manager.
      * @return True if registering successfully, false if failed.
      */
     @PostMapping("/api/registermanager")
     @ResponseBody
-    public JsonMsg<Boolean> registerManager(@RequestBody Map<String, String> map) {
+    public JsonMsg<Boolean> registerManager(@RequestParam String username, @RequestParam String password, @RequestParam String managerName) {
         try {
-            String username = map.get("username");
-            String password = map.get("password");
-            String managerName = map.get("managerName");
             return new JsonMsg<>(userService.registerManager(username, password, managerName) != null);
         } catch (MsgCodeException e) {
             return new JsonMsg<>(e.getMsgCode());

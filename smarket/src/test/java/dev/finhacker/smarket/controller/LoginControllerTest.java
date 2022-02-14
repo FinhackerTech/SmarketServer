@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -31,7 +32,7 @@ public class LoginControllerTest {
 
     @Before
     public void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         userRepository.deleteAll();
     }
 
@@ -44,15 +45,39 @@ public class LoginControllerTest {
     public void register() throws Exception {
         //TODO
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"username\":\"abc\",\"password\":\"123\",\"managerName\":\"abc\"}")
-                .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("username=abc&password=123&managerName=abc")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"username\":\"abc\",\"password\":\"123\",\"managerName\":\"cdf\"}")
-                .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("username=abc&password=456&managerName=cdf")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void login() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("username=abc&password=123&managerName=abc")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders.post("/login/api/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("username=abc&password=123"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    public void loginFailed() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/login/api/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("username=abc&password=111"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
