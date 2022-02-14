@@ -35,7 +35,7 @@ public class Enterprise {
     private String fullName;
     private String legalRepresentative;
     private String establishDate;
-    private Integer registerCapital;
+    private Long registerCapital;
     private String website;
     private String email;
     private String province;
@@ -69,7 +69,7 @@ public class Enterprise {
     public class Brief {
         private String logoUrl;
         private String fullName;
-        private Integer registerCapital;
+        private Long registerCapital;
     }
 
     @JsonIgnore
@@ -102,7 +102,7 @@ public class Enterprise {
         private String website;
         private String shortName;
         private String fullName;
-        private Integer registerCapital;
+        private Long registerCapital;
         private String description;
     }
 

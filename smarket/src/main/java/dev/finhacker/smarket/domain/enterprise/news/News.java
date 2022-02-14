@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 @Data
@@ -14,10 +15,10 @@ public class News {
     @Id
     String url;
 
-    Integer symbol;
+    String symbol;
     String title;
     Integer NOP;
-    Float time;
+    Date time;
     String context;
 
 }
