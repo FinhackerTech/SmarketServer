@@ -35,10 +35,18 @@ public class EnterpriseControllerTest {
     }
 
     @Test
-    public void testSearch() throws Exception {
+    public void search() throws Exception {
         //TODO
         mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/search")
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getEnterprise() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/10100005")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }

@@ -21,7 +21,7 @@ public class Enterprise {
 
     @Id
     private Integer listedCoId;
-    private Integer securityId;
+    private Long securityId;
     private String symbol;
     private String shortName;
     private Date endDate;
@@ -96,7 +96,7 @@ public class Enterprise {
     public class About {
         private String logoUrl;
         private Integer listedCoId;
-        private Integer securityId;
+        private Long securityId;
         private String symbol;
         private String industryName;
         private String website;
