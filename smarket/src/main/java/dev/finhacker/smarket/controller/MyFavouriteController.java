@@ -3,22 +3,29 @@ package dev.finhacker.smarket.controller;
 import dev.finhacker.smarket.domain.enterprise.Enterprise;
 import dev.finhacker.smarket.domain.user.User;
 import dev.finhacker.smarket.domain.user.UserManager;
+import dev.finhacker.smarket.service.EnterpriseService;
 import dev.finhacker.smarket.service.UserManagerService;
 import dev.finhacker.smarket.service.UserService;
 import dev.finhacker.smarket.util.search.FilterType;
 import dev.finhacker.smarket.util.msg.JsonMsg;
 import dev.finhacker.smarket.util.msg.MsgCode;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
+import dev.finhacker.smarket.util.search.SearchInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Controller for "/myfavourite"
  */
+@Slf4j
 @Controller
 @RequestMapping(value = "/myfavourite")
 public class MyFavouriteController {
@@ -28,6 +35,9 @@ public class MyFavouriteController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EnterpriseService enterpriseService;
 
     /**
      * Add the enterprise list to the current user manager's favourites.
@@ -69,18 +79,26 @@ public class MyFavouriteController {
 
     /**
      * Search the enterprises which match the text.
-     * Content type: x-www-form-urlencoded
-     * @param searchText The searching text.
-     * @param pageNumber The page number.
-     * @param filterTypes The list of filter types.
+     * Content type: json
+     * @param searchInfo The info of searching.
      * @return The pages of enterprises in brief.
      */
     @GetMapping("/api/search")
     @ResponseBody
-    public Page<Enterprise.Brief> search(@RequestParam(required = false, defaultValue = "")String searchText,
-                                         @RequestParam(required = false, defaultValue = "0")Integer pageNumber,
-                                         @RequestParam(required = false, defaultValue = "null")List<FilterType> filterTypes) {
-        //TODO
+    public Page<Enterprise.Brief> search(@RequestBody SearchInfo searchInfo) {
+        try {
+            User user = userService.getCurrentUser();
+            if (user instanceof UserManager) {
+                List<Integer> favouriteList = userManagerService.getAllFavourite((UserManager) user);
+                searchInfo.getFilterTypes().add(new FilterType("ListedCoId", new ArrayList<>(favouriteList)));
+                List<Enterprise> enterpriseList = enterpriseService.getEnterpriseBySearch(searchInfo.getSearchText(), searchInfo.getFilterTypes());
+                Pageable pageable = PageRequest.of(searchInfo.getPageNumber(), 10);
+                return enterpriseService.getEnterpriseBriefPage(enterpriseList, pageable);
+            } else throw new MsgCodeException(MsgCode.UNKNOWN);
+        } catch (MsgCodeException e) {
+            log.error(e.getMessage());
+            log.error(searchInfo.toString());
+        }
         return null;
     }
 

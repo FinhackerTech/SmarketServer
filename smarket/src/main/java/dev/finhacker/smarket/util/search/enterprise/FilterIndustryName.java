@@ -1,0 +1,33 @@
+package dev.finhacker.smarket.util.search.enterprise;
+
+import dev.finhacker.smarket.domain.enterprise.Enterprise;
+import dev.finhacker.smarket.util.msg.MsgCode;
+import dev.finhacker.smarket.util.msg.MsgCodeException;
+import dev.finhacker.smarket.util.search.Filter;
+import dev.finhacker.smarket.util.search.FilterType;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
+public class FilterIndustryName implements Filter<Enterprise> {
+
+    private String industryName;
+
+    @Override
+    public void getFromFilterType(FilterType filterType) throws MsgCodeException {
+        List<Object> parameters = filterType.getParameters();
+        if (parameters == null) throw new MsgCodeException(MsgCode.ENTERPRISE_FILTER_PARAM_ERROR);
+        if (parameters.size() != 1) throw new MsgCodeException(MsgCode.ENTERPRISE_FILTER_PARAM_ERROR);
+        Object o = parameters.get(0);
+        if (o instanceof String) industryName = (String) o;
+        else throw  new MsgCodeException(MsgCode.ENTERPRISE_FILTER_PARAM_ERROR);
+    }
+
+    @Override
+    public Predicate getPredicate(Root<Enterprise> root, CriteriaBuilder criteriaBuilder) {
+        return criteriaBuilder.like(root.get("industryName"), '%'+industryName+'%');
+    }
+
+}

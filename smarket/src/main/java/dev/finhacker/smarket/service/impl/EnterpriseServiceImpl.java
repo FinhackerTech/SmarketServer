@@ -6,12 +6,17 @@ import dev.finhacker.smarket.domain.enterprise.news.News;
 import dev.finhacker.smarket.domain.enterprise.news.NewsRepository;
 import dev.finhacker.smarket.service.EnterpriseService;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
+import dev.finhacker.smarket.util.search.FilterType;
+import dev.finhacker.smarket.util.search.SearchSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,14 +46,25 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public List<Enterprise> getAllEnterprises() {
-       List<Enterprise> enterpriseList = enterpriseRepository.findAll();
-       return enterpriseList;
+    public List<Enterprise> getEnterpriseBySearch(String search, List<FilterType> filterTypes) throws MsgCodeException {
+        List<FilterType> searchTypes = Arrays.asList(
+                new FilterType("FullName", search),
+                new FilterType("IndustryName", search),
+                new FilterType("Description", search)
+        );
+        return enterpriseRepository.findAll(new SearchSpecification<Enterprise>(searchTypes, filterTypes, "enterprise"));
     }
 
     @Override
-    public Page<Enterprise> findAllEnterprise(Pageable pageable) {
-        return enterpriseRepository.findAll(pageable);
+    public Page<Enterprise.Brief> getEnterpriseBriefPage(List<Enterprise> enterprises, Pageable pageable) {
+        List<Enterprise.Brief> briefList = new ArrayList<>();
+        for (Enterprise enterprise : enterprises) {
+            briefList.add(enterprise.getBrief());
+        }
+        int start = (int) pageable.getOffset();
+        int end = (start+pageable.getPageSize()) > briefList.size() ? briefList.size() : (start+pageable.getPageSize());
+        Page<Enterprise.Brief> briefPage = new PageImpl<>(briefList.subList(start, end), pageable, briefList.size());
+        return briefPage;
     }
 
 }

@@ -10,6 +10,8 @@ public enum MsgCode {
     USER_FAVOURITE_EXISTED(104, "收藏已存在"),
     USER_FAVOURITE_NOT_EXISTED(105, "收藏不存在"),
     ENTERPRISE_NOT_FOUND(201, "没有该企业"),
+    ENTERPRISE_FILTER_TYPE_NOT_FOUND(202, "企业过滤类型不存在"),
+    ENTERPRISE_FILTER_PARAM_ERROR(203, "企业过滤参数错误"),
     UNKNOWN(1001, "未知错误"),
     ;
 

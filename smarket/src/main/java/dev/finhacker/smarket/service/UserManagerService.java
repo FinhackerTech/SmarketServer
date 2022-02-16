@@ -4,6 +4,7 @@ import dev.finhacker.smarket.domain.user.UserManager;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserManagerService {
 
@@ -23,5 +24,13 @@ public interface UserManagerService {
      * @return The success of removing.
      */
     boolean removeFavourite(UserManager manager, List<Integer> enterprises) throws MsgCodeException;
+
+
+    /**
+     * Get the list of the favourite enterprises of the user manager.
+     * @param manager The manager.
+     * @return The list of the favourite enterprises.
+     */
+    List<Integer> getAllFavourite(UserManager manager);
 
 }

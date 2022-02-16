@@ -61,7 +61,7 @@ public class Enterprise {
 
     @JsonIgnore
     public Brief getBrief() {
-        return new Brief(logoUrl, fullName, registerCapital);
+        return new Brief(logoUrl, fullName, registerCapital, industryName, description);
     }
 
     @Data
@@ -70,6 +70,8 @@ public class Enterprise {
         private String logoUrl;
         private String fullName;
         private Long registerCapital;
+        private String industryName;
+        private String description;
     }
 
     @JsonIgnore

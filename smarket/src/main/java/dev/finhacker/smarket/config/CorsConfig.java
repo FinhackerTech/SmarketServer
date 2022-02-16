@@ -13,7 +13,7 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                String vueAddr = "http://localhost";
+                String vueAddr = "*";
                 registry.addMapping("/login/api/**").allowedOrigins(vueAddr);
                 registry.addMapping("/enterprise/api/**").allowedOrigins(vueAddr);
                 registry.addMapping("/myfavourite/api/**").allowedOrigins(vueAddr);
