@@ -14,10 +14,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 String vueAddr = "*";
-                registry.addMapping("/login/api/**").allowedOrigins(vueAddr);
-                registry.addMapping("/enterprise/api/**").allowedOrigins(vueAddr);
-                registry.addMapping("/myfavourite/api/**").allowedOrigins(vueAddr);
-                registry.addMapping("/setting/api/**").allowedOrigins(vueAddr);
+                registry.addMapping("/login/api/**").allowedOrigins(vueAddr).allowedMethods("GET", "POST", "PUT", "DELETE");
+                registry.addMapping("/enterprise/api/**").allowedOrigins(vueAddr).allowedMethods("GET", "POST", "PUT", "DELETE");
+                registry.addMapping("/myfavourite/api/**").allowedOrigins(vueAddr).allowedMethods("GET", "POST", "PUT", "DELETE");
+                registry.addMapping("/setting/api/**").allowedOrigins(vueAddr).allowedMethods("GET", "POST", "PUT", "DELETE");
+
             }
         };
     }
