@@ -15,7 +15,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

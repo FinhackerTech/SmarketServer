@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //User testuser=new User("abc","password", Role.MANAGER);
         if (principal instanceof User) {
             return (User) principal;
         }
@@ -56,6 +57,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Boolean authPassword(User user, String password) {
+        //System.out.println(user.getPassword());
+        //System.out.println(password);
+        //assert (getPasswordEncoder().matches(password, user.getPassword()));
         return getPasswordEncoder().matches(password, user.getPassword());
     }
 
