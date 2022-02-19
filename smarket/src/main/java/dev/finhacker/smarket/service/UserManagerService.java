@@ -4,7 +4,6 @@ import dev.finhacker.smarket.domain.user.UserManager;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserManagerService {
 
