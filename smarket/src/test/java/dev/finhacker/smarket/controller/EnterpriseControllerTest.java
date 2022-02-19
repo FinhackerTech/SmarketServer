@@ -72,7 +72,7 @@ public class EnterpriseControllerTest {
 
     @Test
     public void getBasic() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/basic/10100048")
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/basic/10100160")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
@@ -111,7 +111,7 @@ public class EnterpriseControllerTest {
 
     @Test
     public void getAllNews() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/news/101306")
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/news/101334")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
