@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,9 +31,12 @@ public class LoginControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    private MockHttpSession session;
+
     @Before
     public void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        session = new MockHttpSession();
         userRepository.deleteAll();
     }
 
@@ -62,14 +65,21 @@ public class LoginControllerTest {
     @Test
     public void login() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
+                        .session(session)
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content("username=abc&password=123&managerName=abc")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
         mvc.perform(MockMvcRequestBuilders.post("/login/api/login")
+                        .session(session)
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content("username=abc&password=123"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders.get("/login/api/current")
+                        .session(session)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
