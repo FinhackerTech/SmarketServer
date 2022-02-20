@@ -47,14 +47,14 @@ public class LoginControllerTest {
         //TODO
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content("username=abc&password=123&managerName=abc")
+                        .content("username=abcdef&password=123456&managerName=abcdef")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"code\":1,\"message\":\"成功\",\"data\":true}"));
         mvc.perform(MockMvcRequestBuilders.post("/login/api/registermanager")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content("username=abc&password=456&managerName=cdf")
+                        .content("username=abcdef&password=456&managerName=cdf")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())

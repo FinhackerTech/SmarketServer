@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +31,10 @@ public class SettingControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    private PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     private MockHttpSession session;
     @Before
     public void setUp() throws Exception {
@@ -44,14 +50,22 @@ public class SettingControllerTest {
 
     //let userservice.getcurrentuser() return a test user instead of null so if you want to perform test task modify the getcurrentuser() api
     @Test
-    @WithMockUser(username = "abc",password = "123")
+    @WithMockUser(username = "abcdef",password = "password123")
     public void changePassword() throws Exception{
-
+        String oldpassword=getPasswordEncoder().encode("password123");
         mvc.perform(MockMvcRequestBuilders.post("/setting/api/changepassword")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content("oldPassword=password&newPassword=newpassword")
+                        .content("oldPassword=password123&newPassword=newpassword")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"code\" : 1, \"message\" : \"成功\", \"data\" : true}"));
+        mvc.perform(MockMvcRequestBuilders.post("/setting/api/changepassword")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content("oldPassword=wrongpassword&newPassword=newpassword")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"code\" : 102, \"message\" : \"密码错误\", \"data\" : null}"));
     }
 }

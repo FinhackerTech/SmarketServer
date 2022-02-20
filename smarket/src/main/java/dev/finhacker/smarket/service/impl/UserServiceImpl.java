@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //User testuser=new User("abc","password", Role.MANAGER);
+        //User testuser=new User("abcdef",getPasswordEncoder().encode("password123"), Role.MANAGER);
         if (principal instanceof User) {
             return (User) principal;
         }

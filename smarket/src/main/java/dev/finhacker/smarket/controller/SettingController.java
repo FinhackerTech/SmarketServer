@@ -18,6 +18,7 @@ public class SettingController {
     @Autowired
     private UserService userService;
 
+
     /**
      * Change the password of the user.
      * Use the session in controller!!!
