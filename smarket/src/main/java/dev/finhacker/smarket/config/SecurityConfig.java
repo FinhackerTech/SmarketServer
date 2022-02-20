@@ -1,5 +1,8 @@
 package dev.finhacker.smarket.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.finhacker.smarket.util.msg.JsonMsg;
+import dev.finhacker.smarket.util.msg.MsgCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -34,15 +38,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/login")
                 .loginProcessingUrl("/login/api/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/index.html")
+                .successHandler(((request, response, authentication) -> {
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.setCharacterEncoding("utf-8");
+                    PrintWriter out = response.getWriter();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    out.write(objectMapper.writeValueAsString(new JsonMsg<>(true)));
+                    out.flush();
+                    out.close();
+                }))
                 .failureHandler((request, response, e) -> {
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.setCharacterEncoding("utf-8");
                     PrintWriter out = response.getWriter();
-                    out.write(e.getMessage());
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    out.write(objectMapper.writeValueAsString(new JsonMsg<Boolean>(MsgCode.USER_LOGIN_FAILED)));
                     out.flush();
                     out.close();
                 })

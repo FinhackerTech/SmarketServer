@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -70,7 +71,7 @@ public class LoginControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content("username=abc&password=123"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
 
     @Test
