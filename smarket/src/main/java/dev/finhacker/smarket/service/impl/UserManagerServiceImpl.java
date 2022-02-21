@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -25,7 +24,7 @@ public class UserManagerServiceImpl implements UserManagerService {
     private EnterpriseService enterpriseService;
 
     @Override
-    public boolean addFavourite(UserManager manager, List<Integer> enterprises) throws MsgCodeException {
+    public synchronized boolean addFavourite(UserManager manager, List<Integer> enterprises) throws MsgCodeException {
         for (Integer id : enterprises) {
             if (!manager.addFavourite(id)) {
                 throw new MsgCodeException(MsgCode.USER_FAVOURITE_EXISTED);
@@ -35,7 +34,7 @@ public class UserManagerServiceImpl implements UserManagerService {
     }
 
     @Override
-    public boolean removeFavourite(UserManager manager, List<Integer> enterprises) throws MsgCodeException {
+    public synchronized boolean removeFavourite(UserManager manager, List<Integer> enterprises) throws MsgCodeException {
         for (Integer id : enterprises) {
             if (!manager.removeFavourite(id)) {
                 throw new MsgCodeException(MsgCode.USER_FAVOURITE_NOT_EXISTED);

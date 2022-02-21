@@ -1,14 +1,15 @@
 * 登录
   * POST
   * URL: `/login/api/login`
-  * Content type: json
+  * Content type: **x-www-form-urlencoded**
   * Param:
     * String username
     * String password
+  * Return: JsonMsg\<Boolean> 登录是否成功
 * 注册客户经理
   * POST
   * URL: `/login/api/register`
-  * Content type: x-www-form-urlencoded
+  * Content type: **x-www-form-urlencoded**
   * Param:
     * String username
     * String password
@@ -77,6 +78,14 @@
   * Param:
     * List\<Integer\> enterpriseList：企业ID
 
+* 获取当前用户
+  * GET
+  * URL: `/login/api/current`
+  * Content type: json
+  * Return: JsonMsg\<User\> 当前用户
+
+
+
 
 
 JsonMsg\<T\>:
@@ -137,12 +146,50 @@ FilterType:
 * String name
 * List\<Object\> parameters
 
-Example:
+* Example:
 
-* ```
-  {
-  	"name": "RegisterCapital",
-  	"parameters": [50000000, 100000000]
-  }
-  ```
+```
+{
+	"name": "RegisterCapital",
+	"parameters": [50000000, 100000000]
+}
+```
 
+
+
+News:
+
+* String url
+* String symbol
+* String title
+* Integer NOP
+* Date time
+* String context
+
+
+
+Page\<T\>:
+
+* List\<T\> content
+* pageable:
+  * sort:
+    * Boolean empty
+    * Boolean sorted
+    * Boolean unsorted
+  * Integer offset
+  * Integer pageNumber
+  * Integer pageSize
+  * Boolean unpaged
+  * Boolean paged
+* Boolean last
+* Integer totalElements
+* Integer totalPages
+* Integer size
+* Integer number
+* sort:
+  * Boolean empty
+  * Boolean sorted
+  * Boolean unsorted
+* Boolean first
+* Integer numberOfElements
+* Boolean empty

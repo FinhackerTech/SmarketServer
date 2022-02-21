@@ -1,7 +1,9 @@
 package dev.finhacker.smarket.controller;
 
+import dev.finhacker.smarket.domain.user.User;
 import dev.finhacker.smarket.service.UserService;
 import dev.finhacker.smarket.util.msg.JsonMsg;
+import dev.finhacker.smarket.util.msg.MsgCode;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,14 @@ public class LoginController {
         } catch (MsgCodeException e) {
             return new JsonMsg<>(e.getMsgCode());
         }
+    }
+
+    @GetMapping("/api/current")
+    @ResponseBody
+    public JsonMsg<User> getCurrentUser() {
+        User user = userService.getCurrentUser();
+        if (user != null) return new JsonMsg<>(user);
+        return new JsonMsg<>(MsgCode.USER_CURRENT_NULL);
     }
 
 }

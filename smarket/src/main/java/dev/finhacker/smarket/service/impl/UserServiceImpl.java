@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User registerManager(String username, String password, String managerName) throws MsgCodeException {
+    public synchronized User registerManager(String username, String password, String managerName) throws MsgCodeException {
         if (userRepository.findByName(username) != null) {
             throw new MsgCodeException(MsgCode.USER_HAS_EXISTED);
         }
