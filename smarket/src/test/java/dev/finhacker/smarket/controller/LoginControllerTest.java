@@ -94,13 +94,13 @@ public class LoginControllerTest {
                         .content("username=abc&password=111"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("Bad credentials"));
+                .andExpect(content().string("{\"code\":106,\"message\":\"用户名或密码错误\",\"data\":null}"));
         mvc.perform(MockMvcRequestBuilders.post("/login/api/login")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content("username=abc&password=123&managerName=bc"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("Bad credentials"));
+                .andExpect(content().string("{\"code\":106,\"message\":\"用户名或密码错误\",\"data\":null}"));
     }
 
 }

@@ -1,6 +1,7 @@
 package dev.finhacker.smarket.controller;
 
-import dev.finhacker.smarket.domain.user.Role;
+import dev.finhacker.smarket.domain.user.UserManager;
+import dev.finhacker.smarket.domain.user.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,15 +21,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import dev.finhacker.smarket.domain.user.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SettingControllerTest {
+
     private MockMvc mvc;
-    private User user;
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -36,21 +39,25 @@ public class SettingControllerTest {
     }
 
     private MockHttpSession session;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        /*session = new MockHttpSession();
-        user = new User("abc","123", Role.MANAGER);
-        session.setAttribute("user",user);*/
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
+        session = new MockHttpSession();
+        userRepository.deleteAll();
+        userRepository.save(new UserManager("abc", getPasswordEncoder().encode("password123"), "abc"));
     }
 
     @After
     public void tearDown() throws Exception {
+        userRepository.deleteAll();
     }
 
-    //let userservice.getcurrentuser() return a test user instead of null so if you want to perform test task modify the getcurrentuser() api
     @Test
-    @WithMockUser
+    @WithUserDetails(value = "abc", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void changePassword() throws Exception{
         String oldpassword=getPasswordEncoder().encode("password123");
         mvc.perform(MockMvcRequestBuilders.post("/setting/api/changepassword")

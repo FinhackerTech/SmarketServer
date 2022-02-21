@@ -15,9 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -44,16 +41,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        /*UserManager testuser=new UserManager("abcdef",getPasswordEncoder().encode("password123"),"123" );
-        Integer[] arrInt_0 = new Integer[2];
-        arrInt_0[0]=10100068;
-        arrInt_0[1]=10100141;
-        List<Integer> enterprises= Arrays.asList(arrInt_0);
-        try {
-            userManagerService.addFavourite(testuser,enterprises);
-        } catch (MsgCodeException e) {
-            e.printStackTrace();
-        }*/
         if (principal instanceof User) {
             return (User) principal;
         }
@@ -73,9 +60,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Boolean authPassword(User user, String password) {
-        //System.out.println(user.getPassword());
-        //System.out.println(password);
-        //assert (getPasswordEncoder().matches(password, user.getPassword()));
         return getPasswordEncoder().matches(password, user.getPassword());
     }
 

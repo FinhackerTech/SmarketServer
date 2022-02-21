@@ -5,6 +5,7 @@ import dev.finhacker.smarket.domain.enterprise.EnterpriseRepository;
 import dev.finhacker.smarket.domain.enterprise.news.News;
 import dev.finhacker.smarket.domain.enterprise.news.NewsRepository;
 import dev.finhacker.smarket.service.EnterpriseService;
+import dev.finhacker.smarket.util.msg.MsgCode;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
 import dev.finhacker.smarket.util.search.FilterType;
 import dev.finhacker.smarket.util.search.SearchSpecification;
@@ -56,13 +57,14 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public Page<Enterprise.Brief> getEnterpriseBriefPage(List<Enterprise> enterprises, Pageable pageable) {
+    public Page<Enterprise.Brief> getEnterpriseBriefPage(List<Enterprise> enterprises, Pageable pageable) throws MsgCodeException {
         List<Enterprise.Brief> briefList = new ArrayList<>();
         for (Enterprise enterprise : enterprises) {
             briefList.add(enterprise.getBrief());
         }
         int start = (int) pageable.getOffset();
         int end = (start+pageable.getPageSize()) > briefList.size() ? briefList.size() : (start+pageable.getPageSize());
+        if (start > end) throw new MsgCodeException(MsgCode.ENTERPRISE_PAGE_ERROR);
         Page<Enterprise.Brief> briefPage = new PageImpl<>(briefList.subList(start, end), pageable, briefList.size());
         return briefPage;
     }

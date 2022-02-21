@@ -31,6 +31,9 @@ public class SettingController {
     @ResponseBody
     public JsonMsg<Boolean> changePassword(@RequestParam String oldPassword, @RequestParam String newPassword) {
         User user = userService.getCurrentUser();
+        if (user == null) {
+            return new JsonMsg<>(MsgCode.USER_CURRENT_NULL);
+        }
         if (userService.authPassword(user, oldPassword)) {
             return new JsonMsg<>(userService.changePassword(user, newPassword));
         } else {
