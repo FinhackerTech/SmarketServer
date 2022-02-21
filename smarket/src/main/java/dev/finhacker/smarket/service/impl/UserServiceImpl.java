@@ -1,6 +1,7 @@
 package dev.finhacker.smarket.service.impl;
 
 import dev.finhacker.smarket.domain.user.*;
+import dev.finhacker.smarket.service.UserManagerService;
 import dev.finhacker.smarket.service.UserService;
 import dev.finhacker.smarket.util.msg.MsgCode;
 import dev.finhacker.smarket.util.msg.MsgCodeException;
@@ -14,12 +15,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserManagerService userManagerService;
 
     private PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,7 +44,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //User testuser=new User("abcdef",getPasswordEncoder().encode("password123"), Role.MANAGER);
+        /*UserManager testuser=new UserManager("abcdef",getPasswordEncoder().encode("password123"),"123" );
+        Integer[] arrInt_0 = new Integer[2];
+        arrInt_0[0]=10100068;
+        arrInt_0[1]=10100141;
+        List<Integer> enterprises= Arrays.asList(arrInt_0);
+        try {
+            userManagerService.addFavourite(testuser,enterprises);
+        } catch (MsgCodeException e) {
+            e.printStackTrace();
+        }*/
         if (principal instanceof User) {
             return (User) principal;
         }

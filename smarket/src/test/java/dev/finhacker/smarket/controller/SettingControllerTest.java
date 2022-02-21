@@ -50,7 +50,7 @@ public class SettingControllerTest {
 
     //let userservice.getcurrentuser() return a test user instead of null so if you want to perform test task modify the getcurrentuser() api
     @Test
-    @WithMockUser(username = "abcdef",password = "password123")
+    @WithMockUser
     public void changePassword() throws Exception{
         String oldpassword=getPasswordEncoder().encode("password123");
         mvc.perform(MockMvcRequestBuilders.post("/setting/api/changepassword")
