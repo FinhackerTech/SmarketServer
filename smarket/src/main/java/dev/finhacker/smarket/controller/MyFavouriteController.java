@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class MyFavouriteController {
      */
     @GetMapping("/api/search")
     @ResponseBody
-    public Page<Enterprise.Brief> search(@RequestBody SearchInfo searchInfo) {
+    public Page<Enterprise.Brief> search(@Valid @RequestBody SearchInfo searchInfo) {
         try {
             User user = userService.getCurrentUser();
             if (user instanceof UserManager) {

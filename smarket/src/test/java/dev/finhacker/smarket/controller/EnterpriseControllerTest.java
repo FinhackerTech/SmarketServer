@@ -39,6 +39,12 @@ public class EnterpriseControllerTest {
     public void search() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/search")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content("")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/search")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"searchText\":\"\",\"pageNumber\":0,\"filterTypes\":[{\"name\":\"RegisterCapital\",\"parameters\":[700000000, 1000000000]}]}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
