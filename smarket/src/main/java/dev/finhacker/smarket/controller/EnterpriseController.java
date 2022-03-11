@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -91,7 +92,7 @@ public class EnterpriseController {
      */
     @GetMapping("/api/search")
     @ResponseBody
-    public Page<Enterprise.Brief> search(@RequestBody SearchInfo searchInfo) {
+    public Page<Enterprise.Brief> search(@Valid @RequestBody SearchInfo searchInfo) {
         try {
             List<Enterprise> enterpriseList = enterpriseService.getEnterpriseBySearch(searchInfo.getSearchText(), searchInfo.getFilterTypes());
             return enterpriseService.getEnterpriseBriefPage(enterpriseList, PageRequest.of(searchInfo.getPageNumber(), 10));
