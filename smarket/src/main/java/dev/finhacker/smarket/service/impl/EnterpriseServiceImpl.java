@@ -2,6 +2,8 @@ package dev.finhacker.smarket.service.impl;
 
 import dev.finhacker.smarket.domain.enterprise.Enterprise;
 import dev.finhacker.smarket.domain.enterprise.EnterpriseRepository;
+import dev.finhacker.smarket.domain.enterprise.location.Location;
+import dev.finhacker.smarket.domain.enterprise.location.LocationRepository;
 import dev.finhacker.smarket.domain.enterprise.news.News;
 import dev.finhacker.smarket.domain.enterprise.news.NewsRepository;
 import dev.finhacker.smarket.service.EnterpriseService;
@@ -30,6 +32,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Autowired
     private NewsRepository newsRepository;
+
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Override
     public Enterprise getEnterprise(Integer id) {
@@ -67,6 +72,16 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         if (start > end) throw new MsgCodeException(MsgCode.ENTERPRISE_PAGE_ERROR);
         Page<Enterprise.Brief> briefPage = new PageImpl<>(briefList.subList(start, end), pageable, briefList.size());
         return briefPage;
+    }
+
+    @Override
+    public Enterprise.Analyse getAnalyse(Enterprise enterprise) {
+        Enterprise.Analyse analyse = enterprise.getAnalyse();
+        Optional<Location> location = locationRepository.findById(enterprise.getListedCoId());
+        if (location.isPresent()) {
+            analyse.setLocation(location.get());
+        }
+        return analyse;
     }
 
 }

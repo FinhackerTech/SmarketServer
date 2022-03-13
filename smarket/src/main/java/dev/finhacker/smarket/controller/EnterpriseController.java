@@ -71,7 +71,7 @@ public class EnterpriseController {
         if (enterprise == null) {
             return new JsonMsg<>(MsgCode.ENTERPRISE_NOT_FOUND);
         }
-        return new JsonMsg<>(enterprise.getAnalyse());
+        return new JsonMsg<>(enterpriseService.getAnalyse(enterprise));
     }
 
     @GetMapping("/api/news/{id}")

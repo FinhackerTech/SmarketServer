@@ -1,15 +1,19 @@
 package dev.finhacker.smarket.domain.enterprise;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.finhacker.smarket.domain.enterprise.location.Location;
+import dev.finhacker.smarket.domain.enterprise.location.LocationRepository;
 import dev.finhacker.smarket.domain.enterprise.quota.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * The entity of enterprises.
@@ -110,7 +114,7 @@ public class Enterprise {
 
     @JsonIgnore
     public Analyse getAnalyse() {
-        return new Analyse(businessCapacity, developmentCapacity, loanRate, profitability, riskLevel, solvency);
+        return new Analyse(businessCapacity, developmentCapacity, loanRate, profitability, riskLevel, solvency, null);
     }
 
     @Data
@@ -122,6 +126,7 @@ public class Enterprise {
         private Profitability profitability;
         private RiskLevel riskLevel;
         private Solvency solvency;
+        private Location location;
     }
 
 }

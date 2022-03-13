@@ -112,6 +112,10 @@ public class EnterpriseControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"code\" : 201, \"message\" : \"没有该企业\", \"data\" : null}"));
+        mvc.perform(MockMvcRequestBuilders.get("/enterprise/api/analyse/10100019")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
     }
 
     @Test

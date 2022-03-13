@@ -29,4 +29,6 @@ public interface EnterpriseService {
 
     Page<Enterprise.Brief> getEnterpriseBriefPage(List<Enterprise> enterprises, Pageable pageable) throws MsgCodeException;
 
+    Enterprise.Analyse getAnalyse(Enterprise enterprise);
+
 }

@@ -13,12 +13,12 @@ import java.util.Date;
 public class News {
 
     @Id
-    String url;
+    private String url;
 
-    String symbol;
-    String title;
-    Integer NOP;
-    Date time;
-    String context;
+    private String symbol;
+    private String title;
+    private Integer NOP;
+    private Date time;
+    private String context;
 
 }
