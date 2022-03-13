@@ -76,7 +76,7 @@ node("yxw") {
         sh "docker container run --name ${CONTAINER_NAME} --net=host  -d ${IMAGE_TO_RUN}"
     }
     stage("signal gitlab: deployed"){
-        updateGitlabCommitStatus name: 'deployed', state: 'success'
+        setBuildStatus("Build succeeded", "SUCCESS");
     }
 
 
