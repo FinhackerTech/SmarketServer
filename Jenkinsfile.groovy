@@ -128,9 +128,9 @@ node("yxw") {
     stage("signal github: deployed"){
         def build = new Build(description: "build success!!!")
 
-        updateGithubCommitStatus(build)
+//        updateGithubCommitStatus(build)
 
-//        setBuildStatus("Build complete", "SUCCESS");
+        setBuildStatus("Build complete", "SUCCESS");
     }
 
 
