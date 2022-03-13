@@ -14,12 +14,12 @@ def getCommitSha() {
 
 def updateGithubCommitStatus(build) {
     // workaround https://issues.jenkins-ci.org/browse/JENKINS-38674
-    repoUrl = getRepoURL()
+    repoURL = getRepoURL()
     commitSha = getCommitSha()
 
     step([
             $class: 'GitHubCommitStatusSetter',
-            reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
+            reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoURL],
             commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
             errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
             statusResultSource: [
