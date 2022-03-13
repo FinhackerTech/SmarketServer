@@ -1,3 +1,13 @@
+void setBuildStatus(String message, String state) {
+    step([
+            $class: "GitHubCommitStatusSetter",
+            reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/my-org/my-repo"],
+            contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+            errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+            statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+    ]);
+}
+
 node("yxw") {
     def workspace = pwd()
 
@@ -12,6 +22,8 @@ node("yxw") {
     def IMAGE_NAME_WITH_TAG = 'smarket_server:latest'
     def IMAGE_TO_RUN = 'lyklove/smarket_server:latest'
     def CONTAINER_NAME = 'smarket_server'
+
+
 
     stage('clone from gitlab into slave\'s workspace') {
         echo "workspace: ${workspace}"
