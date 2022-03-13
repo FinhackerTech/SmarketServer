@@ -26,9 +26,10 @@ def updateGithubCommitStatus(build) {
             statusResultSource: [
                     $class: 'ConditionalStatusResultSource',
                     results: [
-                            [$class: 'BetterThanOrEqualBuildResult', result: 'SUCCESS', state: 'SUCCESS', message: build.description],
-                            [$class: 'BetterThanOrEqualBuildResult', result: 'FAILURE', state: 'FAILURE', message: build.description],
-                            [$class: 'AnyBuildResult', state: 'FAILURE', message: 'Loophole']
+                            [$class: 'AnyBuildResult', result: 'SUCCESS', state: 'SUCCESS', message: build.description]
+//                            [$class: 'BetterThanOrEqualBuildResult', result: 'SUCCESS', state: 'SUCCESS', message: build.description],
+//                            [$class: 'BetterThanOrEqualBuildResult', result: 'FAILURE', state: 'FAILURE', message: build.description],
+//                            [$class: 'AnyBuildResult', state: 'FAILURE', message: 'Loophole']
                     ]
             ]
     ])
@@ -127,9 +128,9 @@ node("yxw") {
     stage("signal github: deployed"){
         def build = new Build(description: "build success!!!")
 
-//        updateGithubCommitStatus(build)
+        updateGithubCommitStatus(build)
 
-        setBuildStatus("Build complete", "SUCCESS");
+//        setBuildStatus("Build complete", "SUCCESS");
     }
 
 
