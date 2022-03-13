@@ -20,6 +20,7 @@ def updateGithubCommitStatus(build) {
     step([
             $class: 'GitHubCommitStatusSetter',
             reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoURL],
+
             commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
             errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
             statusResultSource: [
@@ -32,6 +33,17 @@ def updateGithubCommitStatus(build) {
             ]
     ])
 }
+
+void setBuildStatus(String message, String state) {
+    step([
+            $class: "GitHubCommitStatusSetter",
+            reposSource: [$class: "ManuallyEnteredRepositorySource", url: "git@github.com:FinhackerTech/SmarketServer.git"],
+            contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+            errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+            statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+    ]);
+}
+
 
 node("yxw") {
     def workspace = pwd()
@@ -115,7 +127,9 @@ node("yxw") {
     stage("signal github: deployed"){
         def build = new Build(description: "build success!!!")
 
-        updateGithubCommitStatus(build)
+//        updateGithubCommitStatus(build)
+
+        setBuildStatus("Build complete", "SUCCESS");
     }
 
 
