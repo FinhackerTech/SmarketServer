@@ -90,7 +90,7 @@ public class EnterpriseController {
      * @param searchInfo The info of searching.
      * @return The pages of enterprises in brief.
      */
-    @GetMapping("/api/search")
+    @PostMapping("/api/search")
     @ResponseBody
     public Page<Enterprise.Brief> search(@Valid @RequestBody SearchInfo searchInfo) {
         try {

@@ -88,13 +88,13 @@ public class MyFavouriteControllerTest {
     @Test
     @WithUserDetails(value = "abc", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void search() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/myfavourite/api/search")
+        mvc.perform(MockMvcRequestBuilders.post("/myfavourite/api/search")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"searchText\":\"金属制品业\",\"pageNumber\":0,\"filterTypes\":[{\"name\":\"RegisterCapital\",\"parameters\":[400000000, 500000000]}]}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
-        mvc.perform(MockMvcRequestBuilders.get("/myfavourite/api/search")
+        mvc.perform(MockMvcRequestBuilders.post("/myfavourite/api/search")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"searchText\":\"不存在关键词\",\"pageNumber\":0,\"filterTypes\":[{\"name\":\"RegisterCapital\",\"parameters\":[400000000, 500000000]}]}")
                         .accept(MediaType.APPLICATION_JSON))
