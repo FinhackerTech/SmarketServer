@@ -31,13 +31,13 @@
   * URL: `/enterprise/api/news/{id}`
   * Return: JsonMsg\<List\<News\>\> 
 * 企业搜索
-  * GET
+  * POST
   * URL: `/enterprise/api/search`
   * Content type: json
   * Param:
-    * String searchText：搜索内容，可以不需要
-    * Integer pageNumber：页码，可以不需要
-    * List\<FilterType\> filterTypes：过滤器，可以不需要
+    * String searchText：搜索内容
+    * Integer pageNumber：页码
+    * List\<FilterType\> filterTypes：过滤器
   * Return: Page<Enterprise.Brief> 企业简略信息
 * 添加收藏
   * POST
@@ -55,7 +55,7 @@
     * List\<Integer\> enterpriseList：企业ID
   * Return: JsonMsg\<Boolean\> 移除是否成功
 * 搜索收藏
-  * GET
+  * POST
   * URL: `/myfavourite/api/search`
   * Content type: json
   * Param:
